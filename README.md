@@ -1,0 +1,2 @@
+# statiq.plugins
+Statiq Plugins
