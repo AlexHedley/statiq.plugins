@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# Static.Web
+src/cache/
+src/output/
+
+# JetBrains
+src/.idea/
+
+# NuGet
+nupkg/
