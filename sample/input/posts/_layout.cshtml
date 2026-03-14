@@ -5,6 +5,7 @@
     </head>
     <body class="main">
         @* @Html.Partial("_partials/_header") *@
+        @Html.Raw(Model.GetString("ReadingProgressBar"))
         <div id="site_container" class="container-fluid flex-fill">
             <div class="row">
                 <main id="page_container" role="main" class="col">
