@@ -1,6 +1,23 @@
-<div>
-a
-</div>
-<div>
-b
-</div>
+@{
+    var headings = Model.GetList<Statiq.Plugins.Heading>("Headings");
+}
+@if (headings != null && headings.Count > 0)
+{
+    <nav>
+        <ul>
+            @foreach (var heading in headings)
+            {
+                <li class="heading-level-@heading.Level">
+                    @if (!string.IsNullOrEmpty(heading.Id))
+                    {
+                        <a href="#@heading.Id">@heading.Text</a>
+                    }
+                    else
+                    {
+                        @heading.Text
+                    }
+                </li>
+            }
+        </ul>
+    </nav>
+}
