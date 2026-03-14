@@ -40,6 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="CookiesNotice\cookies-notice.css" />
     <EmbeddedResource Include="CookiesNotice\cookies-notice.html" />
   </ItemGroup>
   

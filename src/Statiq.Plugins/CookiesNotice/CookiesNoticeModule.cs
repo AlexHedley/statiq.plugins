@@ -8,6 +8,7 @@ namespace Statiq.Plugins;
 public class CookiesNoticeModule : ParallelModule
 {
     private static readonly string _noticeTemplate = LoadNoticeTemplate();
+    private static readonly string _noticeStyle = LoadNoticeStyle();
 
     protected override async Task<IEnumerable<IDocument>> ExecuteInputAsync(IDocument input, IExecutionContext context)
     {
@@ -20,15 +21,19 @@ public class CookiesNoticeModule : ParallelModule
         return input.Yield();
     }
 
-    private static string LoadNoticeTemplate()
+    private static string LoadEmbeddedResource(string resourceName)
     {
         var assembly = typeof(CookiesNoticeModule).Assembly;
-        var resourceName = $"{assembly.GetName().Name}.CookiesNotice.cookies-notice.html";
-        using var stream = assembly.GetManifestResourceStream(resourceName)
-            ?? throw new InvalidOperationException($"Embedded resource '{resourceName}' not found.");
+        var fullName = $"{assembly.GetName().Name}.CookiesNotice.{resourceName}";
+        using var stream = assembly.GetManifestResourceStream(fullName)
+            ?? throw new InvalidOperationException($"Embedded resource '{fullName}' not found.");
         using var reader = new System.IO.StreamReader(stream);
         return reader.ReadToEnd();
     }
+
+    private static string LoadNoticeTemplate() => LoadEmbeddedResource("cookies-notice.html");
+
+    private static string LoadNoticeStyle() => LoadEmbeddedResource("cookies-notice.css");
 
     private static string InjectCookiesNotice(string html, IExecutionContext context)
     {
@@ -37,6 +42,7 @@ public class CookiesNoticeModule : ParallelModule
         var cookieButtonText = WebUtility.HtmlEncode(context.GetString("CookiesNoticeButtonText", "Understood"));
 
         var noticeHtml = _noticeTemplate
+            .Replace("{{COOKIE_STYLE}}", _noticeStyle)
             .Replace("{{COOKIE_NAME}}", cookieName)
             .Replace("{{COOKIE_MESSAGE}}", cookieMessage)
             .Replace("{{COOKIE_BUTTON_TEXT}}", cookieButtonText);
