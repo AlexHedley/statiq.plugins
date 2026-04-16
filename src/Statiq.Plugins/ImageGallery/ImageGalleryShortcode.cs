@@ -32,13 +32,15 @@ public class ImageGalleryShortcode : SyncShortcode
         }
 
         var html = new System.Text.StringBuilder();
-        html.AppendLine($"<div class=\"image-gallery{additionalClass}\">");
+        html.AppendLine($"<div class=\"image-gallery{System.Net.WebUtility.HtmlEncode(additionalClass)}\">");
 
         foreach (var (src, alt) in images)
         {
-            var altAttr = string.IsNullOrWhiteSpace(alt) ? string.Empty : alt;
-            html.AppendLine($"  <a href=\"{src}\" data-lightbox=\"{galleryName}\" data-title=\"{altAttr}\">");
-            html.AppendLine($"    <img src=\"{src}\" alt=\"{altAttr}\" />");
+            var encodedSrc = System.Net.WebUtility.HtmlEncode(src);
+            var encodedGalleryName = System.Net.WebUtility.HtmlEncode(galleryName);
+            var encodedAlt = System.Net.WebUtility.HtmlEncode(string.IsNullOrWhiteSpace(alt) ? string.Empty : alt);
+            html.AppendLine($"  <a href=\"{encodedSrc}\" data-lightbox=\"{encodedGalleryName}\" data-title=\"{encodedAlt}\">");
+            html.AppendLine($"    <img src=\"{encodedSrc}\" alt=\"{encodedAlt}\" />");
             html.AppendLine($"  </a>");
         }
 
