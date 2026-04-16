@@ -58,7 +58,7 @@ public class ImageGalleryShortcode : SyncShortcode
             return images;
         }
 
-        foreach (var line in content.Split('\n'))
+        foreach (var line in content.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
         {
             var trimmed = line.Trim();
             if (string.IsNullOrWhiteSpace(trimmed))

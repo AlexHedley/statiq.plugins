@@ -39,9 +39,11 @@ return await Bootstrapper
 Include the Lightbox2 CSS and JS in your layout (e.g. via CDN):
 
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhAfnfw2iXTdcbG12JbLGEa3HO2pA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js" integrity="sha512-Ureale+SBw9RSGCKmhZ/Orf+yaFBsGEg72P2ZE7FuaHKKbqHSTCmJQiUsXRWDqY7bN5sRG50d0k7ywHiHrRQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 ```
+
+> **Note:** For production use, add Subresource Integrity (SRI) `integrity` attributes to the above tags. You can generate the hashes at [srihash.org](https://www.srihash.org/) or retrieve them from the [cdnjs library page](https://cdnjs.com/libraries/lightbox2).
 
 Then use the shortcode in any Markdown or Razor content file:
 
