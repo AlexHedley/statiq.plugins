@@ -57,7 +57,7 @@ public class ImageGalleryShortcode : SyncShortcode
             var encodedSrc = System.Net.WebUtility.HtmlEncode(src);
             var encodedGalleryName = System.Net.WebUtility.HtmlEncode(galleryName);
             var encodedTitle = System.Net.WebUtility.HtmlEncode(string.IsNullOrWhiteSpace(title) ? string.Empty : title);
-            var encodedAlt = System.Net.WebUtility.HtmlEncode(string.IsNullOrWhiteSpace(alt) ? encodedTitle : alt);
+            var encodedAlt = System.Net.WebUtility.HtmlEncode(string.IsNullOrWhiteSpace(alt) ? title : alt);
 
             var anchor = $"  <a href=\"{encodedSrc}\" data-lightbox=\"{encodedGalleryName}\"";
             if (!string.IsNullOrEmpty(encodedTitle))
