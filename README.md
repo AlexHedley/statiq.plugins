@@ -61,20 +61,54 @@ Then use the shortcode in any Markdown or Razor content file:
 |-----------|----------|---------|-------------|
 | `Name`    | No       | `gallery` | The Lightbox2 gallery group name. Images sharing the same name can be cycled through. |
 | `Class`   | No       | _(none)_ | Additional CSS class(es) to add to the wrapping `<div>`. |
+| `AlbumLabel` | No | `"Image %1 of %2"` | Text shown below the image count. Use `%1` and `%2` for current/total. |
+| `WrapAround` | No | `false` | Wrap around to the first/last image when navigating past the end/beginning. |
+| `DisableScrolling` | No | `false` | Prevent page scrolling while the lightbox is open. |
+| `FadeDuration` | No | `300` | Duration (ms) of the fade-in/fade-out animation. |
+| `ImageFadeDuration` | No | `300` | Duration (ms) of the image fade animation. |
+| `ResizeDuration` | No | `700` | Duration (ms) of the resize animation. |
+| `FitImagesInViewport` | No | `true` | Resize images that are larger than the viewport. |
+| `ShowImageNumberLabel` | No | `true` | Show the `AlbumLabel` text in the lightbox. |
+| `MaxWidth` | No | _(none)_ | Maximum width (px) of the lightbox image. |
+| `MaxHeight` | No | _(none)_ | Maximum height (px) of the lightbox image. |
 
 **Content format:**
 
-Each line inside the shortcode is one image. Use `src|alt text` to include an optional caption/alt text, or just provide `src` on its own.
+Each line inside the shortcode is one image. Fields are pipe-separated: `src`, optional `title` (shown as caption in lightbox), and optional `alt` (alt text for the lightbox image — falls back to `title` if omitted).
+
+```
+src
+src|title
+src|title|alt
+```
 
 The shortcode renders Lightbox2-compatible markup:
 
 ```html
 <div class="image-gallery">
-  <a href="/images/photo1.jpg" data-lightbox="my-gallery" data-title="Caption for photo 1">
+  <a href="/images/photo1.jpg" data-lightbox="my-gallery" data-title="Caption for photo 1" data-alt="Caption for photo 1">
     <img src="/images/photo1.jpg" alt="Caption for photo 1" />
   </a>
   ...
 </div>
+```
+
+When any Lightbox2 options are provided, a configuration `<script>` block is also emitted:
+
+```
+<?# ImageGallery Name=my-gallery WrapAround=true AlbumLabel="Photo %1 of %2" ?>
+/images/photo1.jpg|Caption for photo 1
+/images/photo2.jpg|Caption for photo 2
+<?#/ ImageGallery ?>
+```
+
+```html
+<script>
+lightbox.option({
+  'wrapAround': true,
+  'albumLabel': "Photo %1 of %2"
+});
+</script>
 ```
 
 ### Reading time
