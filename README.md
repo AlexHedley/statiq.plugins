@@ -19,7 +19,61 @@
 
 ## Plugins
 
+- Image Gallery
 - Reading Time
+
+### Image Gallery
+
+**A Statiq shortcode to produce an inline image gallery using [Lightbox2](https://lokeshdhakar.com/projects/lightbox2/).**
+
+Add the `ImageGalleryConfigurator` to your bootstrapper:
+
+```csharp
+return await Bootstrapper
+  .Factory
+  .CreateWeb(args)
+  .AddConfigurator<ImageGalleryConfigurator>()
+  .RunAsync();
+```
+
+Include the Lightbox2 CSS and JS in your layout (e.g. via CDN):
+
+```html
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+```
+
+Then use the shortcode in any Markdown or Razor content file:
+
+```
+<?# ImageGallery Name=my-gallery ?>
+/images/photo1.jpg|Caption for photo 1
+/images/photo2.jpg|Caption for photo 2
+/images/photo3.jpg
+<?#/ ImageGallery ?>
+```
+
+**Parameters:**
+
+| Parameter | Required | Default | Description |
+|-----------|----------|---------|-------------|
+| `Name`    | No       | `gallery` | The Lightbox2 gallery group name. Images sharing the same name can be cycled through. |
+| `Class`   | No       | _(none)_ | Additional CSS class(es) to add to the wrapping `<div>`. |
+
+**Content format:**
+
+Each line inside the shortcode is one image. Use `src|alt text` to include an optional caption/alt text, or just provide `src` on its own.
+
+The shortcode renders Lightbox2-compatible markup:
+
+```html
+<div class="image-gallery">
+  <a href="/images/photo1.jpg" data-lightbox="my-gallery" data-title="Caption for photo 1">
+    <img src="/images/photo1.jpg" alt="Caption for photo 1" />
+  </a>
+  ...
+</div>
+```
 
 ### Reading time
 
