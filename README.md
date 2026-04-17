@@ -20,6 +20,7 @@
 ## Plugins
 
 - Reading Time
+- Heading Summary
 
 ### Reading time
 
@@ -35,6 +36,49 @@ You can then override the `input/_header.cshtml` of your _theme_ and place the c
 
 ```html
 <span>~@Model.GetString("ReadingTime") minutes</span>
+```
+
+### Heading Summary
+
+**Extracting blog article headings for navigation from @Jeremy Davis**
+
+- https://blog.jermdavis.dev/posts/2024/extracting-article-headings
+
+Add headings with ids to your Markdown posts so they can be used as anchor links:
+
+```markdown
+## My Section {#my-section}
+```
+
+The plugin will extract all headings (h1–h6) and store them as a `Headings` metadata list on each document.
+Each entry has `Level`, `Id`, and `Text` properties.
+
+You can then render a navigation list in a sidebar or elsewhere in your template:
+
+```html
+@{
+    var headings = Model.GetList<Statiq.Plugins.Heading>("Headings");
+}
+@if (headings != null && headings.Count > 0)
+{
+    <nav>
+        <ul>
+            @foreach (var heading in headings)
+            {
+                <li class="heading-level-@heading.Level">
+                    @if (!string.IsNullOrEmpty(heading.Id))
+                    {
+                        <a href="#@heading.Id">@heading.Text</a>
+                    }
+                    else
+                    {
+                        @heading.Text
+                    }
+                </li>
+            }
+        </ul>
+    </nav>
+}
 ```
 
 ## Docs
