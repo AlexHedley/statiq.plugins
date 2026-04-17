@@ -32,7 +32,7 @@ Add the `ImageGalleryConfigurator` to your bootstrapper:
 return await Bootstrapper
   .Factory
   .CreateWeb(args)
-  .AddConfigurator<ImageGalleryConfigurator>()
+  .AddConfigurator<Bootstrapper>(new ImageGalleryConfigurator())
   .RunAsync();
 ```
 
