@@ -2,6 +2,8 @@ namespace Statiq.Plugins;
 
 public class RelatedArticlesModule : Module
 {
+    public const string RelatedArticlesKey = "RelatedArticles";
+
     private readonly int _maxArticles;
 
     public RelatedArticlesModule(int maxArticles = 5)
@@ -37,7 +39,7 @@ public class RelatedArticlesModule : Module
 
                 results.Add(doc.Clone(new MetadataItems
                 {
-                    { "RelatedArticles", related }
+                    { RelatedArticlesKey, related }
                 }));
             }
             else
