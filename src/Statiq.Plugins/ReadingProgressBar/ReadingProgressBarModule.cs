@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace Statiq.Plugins;
 
 // https://blog.jermdavis.dev/posts/2023/adding-reading-progress-indicator
@@ -19,27 +21,21 @@ public class ReadingProgressBarModule : ParallelModule
 
     private static string GenerateProgressBarHtml(string color)
     {
-        return "<div id=\"reading-progress-bar\"></div>\n" +
-               "<style>\n" +
-               "#reading-progress-bar {\n" +
-               "    position: fixed;\n" +
-               "    top: 0;\n" +
-               "    left: 0;\n" +
-               "    width: 0%;\n" +
-               "    height: 4px;\n" +
-               $"    background-color: {color};\n" +
-               "    z-index: 9999;\n" +
-               "    transition: width 100ms linear;\n" +
-               "}\n" +
-               "</style>\n" +
-               "<script>\n" +
-               "window.onscroll = function() {\n" +
-               "    var winScroll = document.body.scrollTop || document.documentElement.scrollTop;\n" +
-               "    var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;\n" +
-               "    var scrolled = height > 0 ? (winScroll / height) * 100 : 0;\n" +
-               "    var bar = document.getElementById('reading-progress-bar');\n" +
-               "    if (bar) bar.style.width = scrolled + '%';\n" +
-               "};\n" +
-               "</script>";
+        var css = ReadEmbeddedResource("reading-progress-bar.css");
+        var js = ReadEmbeddedResource("reading-progress-bar.js");
+
+        return $"<div id=\"reading-progress-bar\"></div>\n" +
+               $"<style>:root {{ --rpb-color: {color}; }}\n{css}</style>\n" +
+               $"<script>\n{js}</script>";
+    }
+
+    private static string ReadEmbeddedResource(string filename)
+    {
+        var assembly = typeof(ReadingProgressBarModule).Assembly;
+        var resourceName = $"Statiq.Plugins.ReadingProgressBar.{filename}";
+        using var stream = assembly.GetManifestResourceStream(resourceName)
+            ?? throw new InvalidOperationException($"Embedded resource '{resourceName}' not found in assembly '{assembly.FullName}'.");
+        using var reader = new StreamReader(stream);
+        return reader.ReadToEnd();
     }
 }
