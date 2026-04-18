@@ -1,0 +1,22 @@
+@model IDocument
+@{
+  var relatedArticles = Model.GetList<IDocument>("RelatedArticles");
+}
+@if (relatedArticles != null && relatedArticles.Count > 0)
+{
+  <section class="related-articles mt-4">
+    <h4>Related Articles</h4>
+    <ul class="list-unstyled">
+      @foreach (IDocument related in relatedArticles)
+      {
+        <li class="mb-2">
+          <a href="@Context.GetLink(related)">@related.GetString("Title")</a>
+          @if (related.ContainsKey("Lead"))
+          {
+            <small class="text-muted d-block">@related.GetString("Lead")</small>
+          }
+        </li>
+      }
+    </ul>
+  </section>
+}

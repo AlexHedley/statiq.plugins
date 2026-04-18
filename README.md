@@ -20,6 +20,7 @@
 ## Plugins
 
 - Reading Time
+- Related Articles
 
 ### Reading time
 
@@ -35,6 +36,44 @@ You can then override the `input/_header.cshtml` of your _theme_ and place the c
 
 ```html
 <span>~@Model.GetString("ReadingTime") minutes</span>
+```
+
+### Related Articles
+
+**Building a related articles section on a blog post**
+
+The `RelatedArticlesConfigurator` adds a pipeline module that computes related posts based on shared tags. For each post, it compares the post's tags with all other posts' tags and stores the best matches (up to 5 by default) as the `RelatedArticles` metadata list.
+
+Register the configurator in your `Program.cs`:
+
+```csharp
+return await Bootstrapper
+  .Factory
+  .CreateWeb(args)
+  .AddConfigurator(new RelatedArticlesConfigurator())
+  .RunAsync();
+```
+
+You can then include a partial view (e.g. `_related-articles.cshtml`) in your post layout:
+
+```html
+@{
+  var relatedArticles = Model.GetList<IDocument>("RelatedArticles");
+}
+@if (relatedArticles != null && relatedArticles.Count > 0)
+{
+  <section class="related-articles mt-4">
+    <h4>Related Articles</h4>
+    <ul class="list-unstyled">
+      @foreach (IDocument related in relatedArticles)
+      {
+        <li class="mb-2">
+          <a href="@Context.GetLink(related)">@related.GetString("Title")</a>
+        </li>
+      }
+    </ul>
+  </section>
+}
 ```
 
 ## Docs
