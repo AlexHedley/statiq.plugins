@@ -20,6 +20,7 @@
 ## Plugins
 
 - Reading Time
+- Reading Progress Bar
 
 ### Reading time
 
@@ -35,6 +36,22 @@ You can then override the `input/_header.cshtml` of your _theme_ and place the c
 
 ```html
 <span>~@Model.GetString("ReadingTime") minutes</span>
+```
+
+### Reading Progress Bar
+
+**Adding a reading-progress bar to blog posts from @Jeremy Davis**
+
+- https://blog.jermdavis.dev/posts/2023/adding-reading-progress-indicator
+
+Optionally, in your `appsettings.json` add a new property `ProgressBarColor` to customise the bar colour (defaults to `#0085A1`):
+
+`"ProgressBarColor": "#0085A1"`
+
+You can then add the progress bar to your layout template (e.g. `input/posts/_layout.cshtml`) by rendering the metadata in the body:
+
+```html
+@Html.Raw(Model.GetString("ReadingProgressBar"))
 ```
 
 ## Docs

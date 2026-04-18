@@ -38,6 +38,11 @@
     <None Include="icon.png" Pack="true" PackagePath="\" />
     <None Include="../../README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ReadingProgressBar\reading-progress-bar.css" />
+    <EmbeddedResource Include="ReadingProgressBar\reading-progress-bar.js" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Statiq.Web" Version="[1.0.0-beta.60, )" NoWarn="NU5104" />
