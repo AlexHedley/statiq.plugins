@@ -1,0 +1,4 @@
+@if (Document.ContainsKey("JsonLd"))
+{
+    <script type="application/ld+json">@Html.Raw(Document.GetString("JsonLd"))</script>
+}
