@@ -40,6 +40,8 @@
   </ItemGroup>
   
   <ItemGroup>
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.7" />
     <PackageReference Include="Statiq.Web" Version="[1.0.0-beta.60, )" NoWarn="NU5104" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.72" />
   </ItemGroup>
