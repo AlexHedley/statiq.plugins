@@ -1,0 +1,23 @@
+<style>
+{{COOKIE_STYLE}}
+</style>
+<div id="cookie-notice" style="display:none;">
+    <p>{{COOKIE_MESSAGE}}</p>
+    <button id="cookie-notice-accept">{{COOKIE_BUTTON_TEXT}}</button>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/madmurphy/cookies.js@1.0.0/cookies.min.js"></script>
+<script>
+window.addEventListener('DOMContentLoaded', function () {
+    var notice = document.getElementById('cookie-notice');
+    var btn = document.getElementById('cookie-notice-accept');
+    if (notice && btn) {
+        if (!docCookies.hasItem('{{COOKIE_NAME}}')) {
+            notice.style.display = 'flex';
+        }
+        btn.addEventListener('click', function () {
+            docCookies.setItem('{{COOKIE_NAME}}', 'true', Infinity);
+            notice.style.display = 'none';
+        });
+    }
+});
+</script>

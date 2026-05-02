@@ -19,7 +19,28 @@
 
 ## Plugins
 
+- Cookies Notice
 - Reading Time
+
+### Cookies Notice
+
+**Inject a dismissible cookie consent banner into your Statiq Web pages.**
+
+Uses [madmurphy/cookies.js](https://github.com/madmurphy/cookies.js/) to read and write cookies.
+
+![Cookies Notice](docs/images/cookies-notice-element.png)
+
+In your `appsettings.json` add the following optional properties:
+
+```json
+{
+  "CookiesNoticeName": "cookiesAccepted",
+  "CookiesNoticeMessage": "This website uses Google Analytics, and its cookies.",
+  "CookiesNoticeButtonText": "Understood"
+}
+```
+
+See [Cookies Notice docs](docs/CookiesNotice.md) for full details.
 
 ### Reading time
 
