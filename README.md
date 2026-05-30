@@ -45,7 +45,7 @@ Include the Lightbox2 CSS and JS in your layout (e.g. via CDN):
 
 > **Note:** For production use, add Subresource Integrity (SRI) `integrity` attributes to the above tags. You can generate the hashes at [srihash.org](https://www.srihash.org/) or retrieve them from the [cdnjs library page](https://cdnjs.com/libraries/lightbox2).
 
-Then use the shortcode in any Markdown or Razor content file. Use the raw shortcode syntax (`<?!#`) so the body is not pre-processed by Markdown (which would otherwise wrap each line in `<p>` tags):
+Then use the shortcode in any Markdown or Razor content file. Use the raw shortcode syntax (`<?!# ... ?>`) so the body is not pre-processed by Markdown (which would otherwise wrap each line in `<p>` tags):
 
 ```
 <?!# ImageGallery Name=my-gallery ?>

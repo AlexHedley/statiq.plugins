@@ -165,7 +165,7 @@ public class ImageGalleryShortcode : SyncShortcode
     // (non-raw) shortcode syntax is used. The raw shortcode syntax (<?!# ... ?>) avoids
     // this entirely; this regex is kept as a defensive fallback.
     private static readonly System.Text.RegularExpressions.Regex ParagraphTagRegex =
-        new(@"</?p[^>]*>", System.Text.RegularExpressions.RegexOptions.Compiled | System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+        new(@"</?p\s*>", System.Text.RegularExpressions.RegexOptions.Compiled | System.Text.RegularExpressions.RegexOptions.IgnoreCase);
 
     private static List<(string Src, string Title, string Alt)> ParseImages(string content)
     {
