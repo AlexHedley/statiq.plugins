@@ -161,8 +161,11 @@ public class ImageGalleryShortcode : SyncShortcode
             .Replace("\n", "\\n");
     }
 
-    private static readonly System.Text.RegularExpressions.Regex HtmlTagRegex =
-        new("<[^>]+>", System.Text.RegularExpressions.RegexOptions.Compiled);
+    // Matches opening or closing <p> tags that Markdown may inject when the standard
+    // (non-raw) shortcode syntax is used. The raw shortcode syntax (<?!# ... ?>) avoids
+    // this entirely; this regex is kept as a defensive fallback.
+    private static readonly System.Text.RegularExpressions.Regex ParagraphTagRegex =
+        new(@"</?p[^>]*>", System.Text.RegularExpressions.RegexOptions.Compiled | System.Text.RegularExpressions.RegexOptions.IgnoreCase);
 
     private static List<(string Src, string Title, string Alt)> ParseImages(string content)
     {
@@ -175,8 +178,8 @@ public class ImageGalleryShortcode : SyncShortcode
 
         foreach (var line in content.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
         {
-            // Strip any HTML tags that may have been injected by Markdown pre-processing
-            var trimmed = HtmlTagRegex.Replace(line, string.Empty).Trim();
+            // Strip any <p> tags that Markdown may inject when the non-raw shortcode syntax is used
+            var trimmed = ParagraphTagRegex.Replace(line, string.Empty).Trim();
             if (string.IsNullOrWhiteSpace(trimmed))
             {
                 continue;
