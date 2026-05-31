@@ -165,7 +165,7 @@ public class ImageGalleryShortcode : SyncShortcode
     }
 
     // Matches opening or closing <p> tags that Markdown may inject when the standard
-    // (non-raw) shortcode syntax is used. The raw shortcode syntax (<?!# ... ?>) avoids
+    // (non-raw) shortcode syntax is used. The raw shortcode syntax (<?! ... ?>) avoids
     // this entirely; this regex is kept as a defensive fallback.
     private static readonly System.Text.RegularExpressions.Regex ParagraphTagRegex =
         new(@"</?p\s*>", System.Text.RegularExpressions.RegexOptions.Compiled | System.Text.RegularExpressions.RegexOptions.IgnoreCase);

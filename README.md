@@ -45,14 +45,14 @@ Include the Lightbox2 CSS and JS in your layout (e.g. via CDN):
 
 > **Note:** For production use, add Subresource Integrity (SRI) `integrity` attributes to the above tags. You can generate the hashes at [srihash.org](https://www.srihash.org/) or retrieve them from the [cdnjs library page](https://cdnjs.com/libraries/lightbox2).
 
-Then use the shortcode in any Markdown or Razor content file. Use the raw shortcode syntax (`<?!# ... ?>`) so the body is not pre-processed by Markdown (which would otherwise wrap each line in `<p>` tags):
+Then use the shortcode in any Markdown or Razor content file. Use the raw shortcode syntax (`<?! ... ?>`) so the body is not pre-processed by Markdown (which would otherwise wrap each line in `<p>` tags):
 
 ```
-<?!# ImageGallery Name=my-gallery ?>
+<?! ImageGallery Name=my-gallery ?>
 /images/photo1.jpg|Caption for photo 1
 /images/photo2.jpg|Caption for photo 2
 /images/photo3.jpg
-<?!#/ ImageGallery ?>
+<?!/ ImageGallery ?>
 ```
 
 **Parameters:**
@@ -96,10 +96,10 @@ The shortcode renders Lightbox2-compatible markup:
 When any Lightbox2 options are provided, a configuration `<script>` block is also emitted:
 
 ```
-<?!# ImageGallery Name=my-gallery WrapAround=true AlbumLabel="Photo %1 of %2" ?>
+<?! ImageGallery Name=my-gallery WrapAround=true AlbumLabel="Photo %1 of %2" ?>
 /images/photo1.jpg|Caption for photo 1
 /images/photo2.jpg|Caption for photo 2
-<?!#/ ImageGallery ?>
+<?!/ ImageGallery ?>
 ```
 
 ```html
