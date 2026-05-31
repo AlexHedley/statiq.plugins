@@ -21,6 +21,8 @@ public class ImageGalleryShortcode : SyncShortcode
     private const string MaxWidth = nameof(MaxWidth);
     private const string MaxHeight = nameof(MaxHeight);
 
+    private const string ImageWidth = nameof(ImageWidth);
+
     public override ShortcodeResult Execute(
         KeyValuePair<string, string>[] args,
         string content,
@@ -32,7 +34,7 @@ public class ImageGalleryShortcode : SyncShortcode
             AlbumLabel, WrapAround, DisableScrolling,
             FadeDuration, ImageFadeDuration, ResizeDuration,
             FitImagesInViewport, ShowImageNumberLabel,
-            MaxWidth, MaxHeight);
+            MaxWidth, MaxHeight, ImageWidth);
 
         var galleryName = arguments.ContainsKey(Name)
             ? arguments.GetString(Name)
@@ -71,7 +73,8 @@ public class ImageGalleryShortcode : SyncShortcode
             anchor += ">";
 
             html.AppendLine(anchor);
-            html.AppendLine($"    <img src=\"{encodedSrc}\" alt=\"{encodedAlt}\" />");
+            var imageWidth = arguments.ContainsKey(ImageWidth) ? arguments.GetString(ImageWidth) : "100px";
+            html.AppendLine($"    <img src=\"{encodedSrc}\" alt=\"{encodedAlt}\" width=\"{imageWidth}px\" />");
             html.AppendLine($"  </a>");
         }
 
