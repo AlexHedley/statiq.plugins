@@ -49,7 +49,7 @@ Then use the shortcode in any Markdown or Razor content file. Use the raw shortc
 
 ```
 <?! ImageGallery Name=my-gallery ?>
-/images/photo1.jpg|Caption for photo 1
+/images/photo1.jpg|Caption for photo 1|Image Alt
 /images/photo2.jpg|Caption for photo 2
 /images/photo3.jpg
 <?!/ ImageGallery ?>
@@ -71,6 +71,7 @@ Then use the shortcode in any Markdown or Razor content file. Use the raw shortc
 | `ShowImageNumberLabel` | No | `true` | Show the `AlbumLabel` text in the lightbox. |
 | `MaxWidth` | No | _(none)_ | Maximum width (px) of the lightbox image. |
 | `MaxHeight` | No | _(none)_ | Maximum height (px) of the lightbox image. |
+| `ImageWidth` | No | 100 | The size of the preview images in the gallery | 
 
 **Content format:**
 
