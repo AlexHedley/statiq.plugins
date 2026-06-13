@@ -19,8 +19,99 @@
 
 ## Plugins
 
+- Image Gallery
 - Reading Time
 - JSON-LD
+
+### Image Gallery
+
+**A Statiq shortcode to produce an inline image gallery using [Lightbox2](https://lokeshdhakar.com/projects/lightbox2/).**
+
+Add the `ImageGalleryConfigurator` to your bootstrapper:
+
+```csharp
+return await Bootstrapper
+  .Factory
+  .CreateWeb(args)
+  .AddConfigurator<Bootstrapper>(new ImageGalleryConfigurator())
+  .RunAsync();
+```
+
+Include the Lightbox2 CSS and JS in your layout (e.g. via CDN):
+
+```html
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+```
+
+> **Note:** For production use, add Subresource Integrity (SRI) `integrity` attributes to the above tags. You can generate the hashes at [srihash.org](https://www.srihash.org/) or retrieve them from the [cdnjs library page](https://cdnjs.com/libraries/lightbox2).
+
+Then use the shortcode in any Markdown or Razor content file. Use the raw shortcode syntax (`<?! ... ?>`) so the body is not pre-processed by Markdown (which would otherwise wrap each line in `<p>` tags):
+
+```
+<?! ImageGallery Name=my-gallery ?>
+/images/photo1.jpg|Caption for photo 1|Image Alt
+/images/photo2.jpg|Caption for photo 2
+/images/photo3.jpg
+<?!/ ImageGallery ?>
+```
+
+**Parameters:**
+
+| Parameter | Required | Default | Description |
+|-----------|----------|---------|-------------|
+| `Name`    | No       | `gallery` | The Lightbox2 gallery group name. Images sharing the same name can be cycled through. |
+| `Class`   | No       | _(none)_ | Additional CSS class(es) to add to the wrapping `<div>`. |
+| `AlbumLabel` | No | `"Image %1 of %2"` | Text shown below the image count. Use `%1` and `%2` for current/total. |
+| `WrapAround` | No | `false` | Wrap around to the first/last image when navigating past the end/beginning. |
+| `DisableScrolling` | No | `false` | Prevent page scrolling while the lightbox is open. |
+| `FadeDuration` | No | `300` | Duration (ms) of the fade-in/fade-out animation. |
+| `ImageFadeDuration` | No | `300` | Duration (ms) of the image fade animation. |
+| `ResizeDuration` | No | `700` | Duration (ms) of the resize animation. |
+| `FitImagesInViewport` | No | `true` | Resize images that are larger than the viewport. |
+| `ShowImageNumberLabel` | No | `true` | Show the `AlbumLabel` text in the lightbox. |
+| `MaxWidth` | No | _(none)_ | Maximum width (px) of the lightbox image. |
+| `MaxHeight` | No | _(none)_ | Maximum height (px) of the lightbox image. |
+| `ImageWidth` | No | 100 | The size of the preview images in the gallery | 
+
+**Content format:**
+
+Each line inside the shortcode is one image. Fields are pipe-separated: `src`, optional `title` (shown as caption in lightbox), and optional `alt` (alt text for the lightbox image — falls back to `title` if omitted).
+
+```
+src
+src|title
+src|title|alt
+```
+
+The shortcode renders Lightbox2-compatible markup:
+
+```html
+<div class="image-gallery">
+  <a href="/images/photo1.jpg" data-lightbox="my-gallery" data-title="Caption for photo 1" data-alt="Caption for photo 1">
+    <img src="/images/photo1.jpg" alt="Caption for photo 1" />
+  </a>
+  ...
+</div>
+```
+
+When any Lightbox2 options are provided, a configuration `<script>` block is also emitted:
+
+```
+<?! ImageGallery Name=my-gallery WrapAround=true AlbumLabel="Photo %1 of %2" ?>
+/images/photo1.jpg|Caption for photo 1
+/images/photo2.jpg|Caption for photo 2
+<?!/ ImageGallery ?>
+```
+
+```html
+<script>
+lightbox.option({
+  'wrapAround': true,
+  'albumLabel': "Photo %1 of %2"
+});
+</script>
+```
 
 ### Reading time
 
