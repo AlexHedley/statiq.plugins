@@ -21,6 +21,7 @@
 
 - Image Gallery
 - Reading Time
+- JSON-LD
 
 ### Image Gallery
 
@@ -128,7 +129,46 @@ You can then override the `input/_header.cshtml` of your _theme_ and place the c
 <span>~@Model.GetString("ReadingTime") minutes</span>
 ```
 
-## Docs
+### JSON-LD
+
+**Building a JSON-LD ([schema.org/BlogPosting](https://schema.org/BlogPosting)) representation of blog posts**
+
+- https://json-ld.org/
+- https://jsonld.com/
+
+Register the configurator in your `Program.cs`:
+
+```csharp
+return await Bootstrapper
+  .Factory
+  .CreateWeb(args)
+  .AddConfigurator<JsonLdConfigurator>()
+  .RunAsync();
+```
+
+You can then override the `input/_head.cshtml` of your _theme_ and place the generated `<script>` tag inside the `<head>` element:
+
+```html
+@if (Document.ContainsKey("JsonLd"))
+{
+  <script type="application/ld+json">@Html.Raw(Document.GetString("JsonLd"))</script>
+}
+```
+
+The following [schema.org/BlogPosting](https://schema.org/BlogPosting) properties are populated from document metadata and site settings:
+
+| JSON-LD property | Source |
+|---|---|
+| `headline` | `Title` metadata |
+| `description` | `Lead` or `Description` metadata |
+| `datePublished` | `Published` metadata |
+| `image` | `Image` metadata (absolute URL) |
+| `url` | Document link (absolute URL) |
+| `author` | `Author` metadata (document or site settings) |
+| `publisher` | `SiteTitle` setting |
+| `keywords` | `Tags` metadata |
+
+
 
 - [Docs](docs/README.md)
   - [Libraries](docs/LIBRARIES.md)

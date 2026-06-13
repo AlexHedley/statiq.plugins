@@ -1,2 +1,7 @@
+@if (Document.ContainsKey("JsonLd"))
+{
+    <script type="application/ld+json">@Html.Raw(Document.GetString("JsonLd"))</script>
+}
+
 @* Lightbox2 CSS - add integrity="sha384-..." for production (see https://cdnjs.com/libraries/lightbox2) *@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
