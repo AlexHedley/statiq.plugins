@@ -21,6 +21,7 @@
 
 - Image Gallery
 - Reading Time
+- Social Share Image
 
 ### Image Gallery
 
@@ -126,6 +127,56 @@ You can then override the `input/_header.cshtml` of your _theme_ and place the c
 
 ```html
 <span>~@Model.GetString("ReadingTime") minutes</span>
+```
+
+### Social Share Image
+
+**Automatically generate a 1200x630 social share image for each blog post using ImageSharp**
+
+- https://wellsb.com/csharp/aspnet/generate-images-statiq-imagesharp
+
+The plugin generates a PNG image per blog post, saves it to `output/images/social/`, and sets
+the `Image` metadata key so that Open Graph / Twitter Card meta tags pick it up automatically.
+Processing is skipped for any post that already has an `image` frontmatter property set.
+
+Register the configurator in `Program.cs`:
+
+```csharp
+return await Bootstrapper
+  .Factory
+  .CreateWeb(args)
+  .AddConfigurator<SocialImageConfigurator>()
+  .RunAsync();
+```
+
+Optionally, add settings to `appsettings.json`:
+
+```json
+{
+  "BrandText": "My Blog",
+  "SocialImageFont": "Arial"
+}
+```
+
+`BrandText` is the text drawn in the lower-left corner of every generated image. If omitted, the
+`SiteTitle` setting is used as a fallback. `SocialImageFont` names the system font to use; a set
+of common cross-platform fonts is tried automatically when the setting is absent.
+
+You can also configure the module directly when registering it:
+
+```csharp
+configurable.ModifyPipeline("Content", p =>
+{
+    p.ProcessModules.Add(
+        new SocialImageModule()
+            .WithBrandText("My Blog")
+            .WithFontFamily("Arial")
+            .WithBackgroundColor(SixLabors.ImageSharp.Color.FromRgb(30, 30, 30))
+            .WithTitleColor(SixLabors.ImageSharp.Color.White)
+            .WithBrandColor(SixLabors.ImageSharp.Color.FromRgb(180, 180, 180))
+            .WithOutputPath("images/social")
+    );
+});
 ```
 
 ## Docs
